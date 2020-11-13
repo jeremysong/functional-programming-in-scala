@@ -20,4 +20,10 @@ class Exercise2_1_Test extends AnyFlatSpec {
   it should "return correct sequence" in {
     0 to 8 map (i => fib(i)) should contain theSameElementsInOrderAs 0 :: 1 :: 1 :: 2 :: 3 :: 5 :: 8 :: 13 :: 21 :: Nil
   }
+  
+  it should "throw IllegalArgumentException when given non-positive number" in {
+    intercept[IllegalArgumentException] {
+      fib(-1)
+    }
+  }
 }
