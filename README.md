@@ -1,0 +1,1 @@
+Exercises for [Functional Programming In Scala](https://www.manning.com/books/functional-programming-in-scala) book.
