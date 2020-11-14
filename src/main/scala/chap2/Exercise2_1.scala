@@ -1,12 +1,18 @@
 package chap2
 
+import scala.annotation.tailrec
+
 object Exercise2_1 {
   def fib(n: Int): Int = {
-    n match {
-      case _ if n < 0 => throw new IllegalArgumentException(s"$n has to be positive")
-      case 0 => 0
-      case 1 => 1
-      case _ => fib(n - 1) + fib(n - 2)
+    if (n < 0) throw new IllegalArgumentException
+
+    @tailrec
+    def go(m: Int, a: Int = 0, b: Int = 1): Int = m match {
+      case 0 => a
+      case 1 => b
+      case _ => go(m - 1, b, a + b)
     }
+
+    go(n)
   }
 }

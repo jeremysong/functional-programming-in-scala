@@ -3,7 +3,7 @@ package chap2
 import chap2.Exercise2_1._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.must.Matchers.contain
-import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
+import org.scalatest.matchers.should.Matchers._
 
 class Exercise2_1_Test extends AnyFlatSpec {
 
