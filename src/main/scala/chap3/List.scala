@@ -120,4 +120,65 @@ object List {
     case Nil => Nil
     case Cons(x, xs) => foldLeft(xs, x)((l1, l2) => foldRight(l1, l2)((a, b) => Cons(a, b)))
   }
+
+  /** Exercise 3.16 */
+  def addOne(is: List[Int]): List[Int] = is match {
+    case Nil => Nil
+    case Cons(x, xs) => Cons(x + 1, addOne(xs))
+  }
+
+  /** Exercise 3.17 */
+  def toStringList(ds: List[Double]): List[String] = ds match {
+    case Nil => Nil
+    case Cons(x, xs) => Cons(x.toString, toStringList(xs))
+  }
+
+  /** Exercise 3.18 */
+  def map[A, B](as: List[A])(f: A => B): List[B] = as match {
+    case Nil => Nil
+    case Cons(x, xs) => Cons(f(x), map(xs)(f))
+  }
+
+  /** Exercise 3.19 */
+  def filter[A](as: List[A])(f: A => Boolean): List[A] = as match {
+    case Nil => Nil
+    case Cons(x, xs) => if (f(x)) filter(xs)(f) else Cons(x, filter(xs)(f))
+  }
+
+  /** Exercise 3.20 */
+  def flatMap[A, B](as: List[A])(f: A => List[B]): List[B] = as match {
+    case Nil => Nil
+    case Cons(x, xs) => foldRight(f(x), flatMap(xs)(f))((a, b) => Cons(a, b))
+  }
+
+  /** Exercise 3.21 */
+  def filter2[A](as: List[A])(f: A => Boolean): List[A] = {
+    flatMap(as) {
+      case a if f(a) => Nil
+      case a => List(a)
+    }
+  }
+
+  /** Exercise 3.22 */
+  def pairWiseSum(as: List[Int], bs: List[Int]): List[Int] = (as, bs) match {
+    case (Nil, _) | (_, Nil) | (Nil, Nil) => Nil
+    case (Cons(a, as), Cons(b, bs)) => Cons(a + b, pairWiseSum(as, bs))
+  }
+
+  /** Exercise 3.23 */
+  def zipWith[A](as: List[A], bs: List[A])(f: (A, A) => A): List[A] = (as, bs) match {
+    case (Nil, _) | (_, Nil) | (Nil, Nil) => Nil
+    case (Cons(a, as), Cons(b, bs)) => Cons(f(a, b), zipWith(as, bs)(f))
+  }
+
+  /** Exercise 3.24 */
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+    def suffixCompare(sup: List[A], sub:List[A]): Boolean = sup match {
+      case Nil => false
+      case _ if sup == sub => true
+      case Cons(x, xs) => suffixCompare(xs, sub) | suffixCompare(reverse(xs), reverse(sub))
+    }
+
+    suffixCompare(sup, sub) | suffixCompare(reverse(sup), reverse(sub))
+  }
 }
