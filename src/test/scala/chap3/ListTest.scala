@@ -1,10 +1,9 @@
 package chap3
 
+import chap3.List._
 import org.scalatest.flatspec.AnyFlatSpec
-import chap3.List.{length, _}
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
-import scala.annotation.tailrec
 
 class ListTest extends AnyFlatSpec {
   behavior of "List"
