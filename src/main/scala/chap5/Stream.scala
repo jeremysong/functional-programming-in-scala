@@ -13,10 +13,10 @@ sealed trait Stream[+A] {
   }
 
   /** Exercise 5.2 */
-  def take(n: Int): List[A] = (this, n) match {
-    case (_, n) if n <= 0 => Nil
-    case (Empty, _) => Nil
-    case (Cons(h, t), n) => h() :: t().take(n - 1)
+  def take(n: Int): Stream[A] = (this, n) match {
+    case (_, n) if n <= 0 => Empty
+    case (Empty, _) => Empty
+    case (Cons(h, t), n) => Cons(h, () => t().take(n - 1))
   }
 
   def drop(n: Int): Stream[A] = (this, n) match {

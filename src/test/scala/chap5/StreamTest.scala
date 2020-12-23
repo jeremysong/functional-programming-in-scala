@@ -21,11 +21,11 @@ class StreamTest extends AnyFlatSpec {
   }
 
   it should "take" in {
-    Empty.take(0) shouldEqual Nil
-    Empty.take(2) shouldEqual Nil
-    Stream(1, 2).take(0) shouldEqual Nil
-    Stream(1, 2).take(3) shouldEqual List(1, 2)
-    Stream(1, 2).take(1) shouldEqual List(1)
+    Empty.take(0) shouldEqual Empty
+    Empty.take(2) shouldEqual Empty
+    Stream(1, 2).take(0) shouldEqual Empty
+    Stream(1, 2).take(3).toList shouldEqual List(1, 2)
+    Stream(1, 2).take(1).toList shouldEqual List(1)
   }
 
   it should "takeWhile" in {
