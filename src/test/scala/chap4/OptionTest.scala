@@ -1,5 +1,6 @@
 package chap4
 
+import chap4.Option.{Try, map2, sequence, sequence2, traverse}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers.convertToAnyShouldWrapper
 
@@ -36,5 +37,32 @@ class OptionTest extends AnyFlatSpec {
   it should "variance" in {
     Option.variance(Nil) shouldEqual None
     Option.variance(1D :: 1D :: 1D :: Nil) shouldEqual Some(0D)
+  }
+
+  it should "map2" in {
+    val add = (a: Int, b: Int) => a + b
+    map2(None, None)(add) shouldEqual None
+    map2(None, Some(2))(add) shouldEqual None
+    map2(Some(1), None)(add) shouldEqual None
+    map2(Some(1), Some(2))(add) shouldEqual Some(3)
+  }
+
+  it should "sequence" in {
+    sequence(Nil) shouldEqual Some(Nil)
+    sequence(Some(1) :: Some(2) :: Nil) shouldEqual Some(1 :: 2 :: Nil)
+    sequence(Some(1) :: None :: Nil) shouldEqual None
+  }
+
+  it should "traverse" in {
+    val toInt = (s: String) => Try(s.toInt)
+    traverse(Nil)(toInt) shouldEqual Some(Nil)
+    traverse("1" :: "2" :: Nil)(toInt) shouldEqual Some(1 :: 2 :: Nil)
+    traverse("1" :: "a" :: Nil)(toInt) shouldEqual None
+  }
+
+  it should "sequence2" in {
+    sequence2(Nil) shouldEqual Some(Nil)
+    sequence2(Some(1) :: Some(2) :: Nil) shouldEqual Some(1 :: 2 :: Nil)
+    sequence2(Some(1) :: None :: Nil) shouldEqual None
   }
 }
